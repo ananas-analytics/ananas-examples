@@ -8,7 +8,7 @@ This repository contains the examples for Ananas Analytics Desktop Edition. [htt
 
 2. Unzip the downloaded the zip file
 
-3. Open Ananas Desktop [Download It](https://github.com/ananas-analytics/ananas-desktop)
+3. Open Ananas Desktop [Download It HERE](https://github.com/ananas-analytics/ananas-desktop)
 
 4. Import the project from the unzipped folder (import 1 project at a time)
 
