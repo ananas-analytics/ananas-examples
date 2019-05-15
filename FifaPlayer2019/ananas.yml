@@ -11,7 +11,7 @@ steps:
     config:
       format: csv
       header: true
-      path: "{PROJECT_PATH}/fifa2019.csv"
+      path: "${PROJECT_PATH}/fifa2019.csv"
       subtype: file
     description: |+
       # Fifa Player 2019
