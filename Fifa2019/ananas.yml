@@ -276,8 +276,6 @@ steps:
         	`Position`
         FROM PCOLLECTION
         GROUP BY `Position`
-        ORDER BY `count` DESC
-        LIMIT 1000
       subtype: sql
     dataframe:
       data: []
@@ -301,6 +299,7 @@ steps:
         - count
       sql: |
         SELECT * FROM PCOLLECTION
+        ORDER BY `COUNT` DESC
       subtype: bar chart
       title: Players by position
       xlabel: Position
@@ -327,8 +326,6 @@ steps:
           Nationality as Country
         FROM PCOLLECTION
         GROUP BY Nationality
-        ORDER BY `count` DESC
-        LIMIT 1000
       subtype: sql
     dataframe:
       data: []
@@ -350,10 +347,12 @@ steps:
         - Country
       measures:
         - count
-      sql: |
+      sql: |-
         SELECT * FROM PCOLLECTION
+        ORDER BY `COUNT` DESC
+        LIMIT 10
       subtype: bar chart
-      title: Total number of players from each country
+      title: (TOP 10) Total number of players from each country
       xlabel: Country
       ylabel: Players
     dataframe:
@@ -368,7 +367,7 @@ steps:
     description: Visualize your data as bar charts
     id: 5d31d26784b5674b6a2202b8
     metadataId: org.ananas.visualization.barchart
-    name: Players by country bar chart
+    name: Players by country (top 10) bar chart
     type: viewer
   5d31d30184b5674b6a2202bd:
     config:
@@ -497,7 +496,8 @@ steps:
             type: VARCHAR
           - name: Positioning
             type: INTEGER
-    description: Transform your data with SQL
+    description: You can use variable to parameterize your setp. By applying a different
+      value in `Data Criteria`. You can make ad-hoc query easily
     id: 5d32089484b5674b6a2202df
     metadataId: org.ananas.transform.sql
     name: Top 5 players with specail ability
