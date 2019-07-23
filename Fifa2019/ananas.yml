@@ -31,7 +31,8 @@ name: Fifa2019
 steps:
   5d31c71a84b5674b6a220288:
     config:
-      forceAutoDetectSchema: false
+      delimiter: ","
+      forceAutoDetectSchema: true
       format: csv
       header: true
       path: ${PROJECT_PATH}/fifa2019.csv
@@ -299,7 +300,8 @@ steps:
         - count
       sql: |
         SELECT * FROM PCOLLECTION
-        ORDER BY `COUNT` DESC
+        ORDER BY `count` DESC
+        LIMIT 1000
       subtype: bar chart
       title: Players by position
       xlabel: Position
@@ -349,7 +351,7 @@ steps:
         - count
       sql: |-
         SELECT * FROM PCOLLECTION
-        ORDER BY `COUNT` DESC
+        ORDER BY `count` DESC
         LIMIT 10
       subtype: bar chart
       title: (TOP 10) Total number of players from each country
@@ -360,9 +362,9 @@ steps:
       id: 5d31d26784b5674b6a2202b8
       schema:
         fields:
-          - name: COUNT
+          - name: count
             type: BIGINT
-          - name: COUNTRY
+          - name: Country
             type: VARCHAR
     description: Visualize your data as bar charts
     id: 5d31d26784b5674b6a2202b8
