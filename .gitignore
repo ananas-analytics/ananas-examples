@@ -1,1 +1,4 @@
 .DS_Store
+**/layout.yml
+**/settings.yml
+**/triggers.yml
