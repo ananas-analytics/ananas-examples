@@ -73,7 +73,17 @@ steps:
             type: DECIMAL
           - name: main.temp
             type: DECIMAL
-    description: Connect data from Web API
+    description: >
+      Connect data with openweather API
+
+
+      This example can be executed on Ananas Desktop 0.9.0+
+
+
+      See [OpenWeather Web API](https://openweathermap.org/api) for more details. 
+
+
+      To run the example, you need to first create an OpenWeather API key for free.
     id: 5d43fba34d5bd13eb0eb3b1d
     metadataId: org.ananas.source.api
     name: City1 Weather
@@ -135,7 +145,17 @@ steps:
             type: DECIMAL
           - name: main.temp
             type: DECIMAL
-    description: Connect data from Web API
+    description: >
+      Connect data with openweather API
+
+
+      This example can be executed on Ananas Desktop 0.9.0+
+
+
+      See [OpenWeather Web API](https://openweathermap.org/api) for more details. 
+
+
+      To run the example, you need to first create an OpenWeather API key for free.
     id: 5d43fbf74d5bd13eb0eb3b1e
     metadataId: org.ananas.source.api
     name: City2 Weather
