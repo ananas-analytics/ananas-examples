@@ -1,0 +1,11 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:10.10
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres-password
+    volumes:
+      - .:/docker-entrypoint-initdb.d/:ro
+    ports:
+      - "5432:5432"
