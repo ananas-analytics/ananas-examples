@@ -30,4 +30,9 @@ Customer analysis from MySQL database.
 
 Customer analysis from PostgreSQL database
 
-More examples coming soon ...
+### Excel
+
+Compares 2013 & 2014 Q4 monthly profit from an excel file.
+
+
+> More examples coming soon ...
