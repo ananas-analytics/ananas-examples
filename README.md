@@ -20,7 +20,7 @@ A simple analysis of the Fifa2019 player data.
 
 ### WeatherForcast
 
-Compare two cities' next 5 day's temporature with `OpenWeather` web API.
+Compare two cities' next 5 day's temperature with `OpenWeather` web API.
 
 ### MySQL
 
