@@ -18,5 +18,16 @@ This repository contains the examples for Ananas Analytics Desktop Edition. [htt
 
 A simple analysis of the Fifa2019 player data.
 
+### WeatherForcast
+
+Compare two cities' next 5 day's temporature with `OpenWeather` web API.
+
+### MySQL
+
+Customer analysis from MySQL database.
+
+### PostgreSQL
+
+Customer analysis from PostgreSQL database
 
 More examples coming soon ...
