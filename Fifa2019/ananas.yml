@@ -26,6 +26,8 @@ dag:
       target: 5d32089484b5674b6a2202df
     - source: 5d32089484b5674b6a2202df
       target: 5d32099f84b5674b6a2202e5
+    - source: 5d31d09384b5674b6a2202b4
+      target: 5d61c4b7f21cd8730ea65ffa
 id: 5d31c70384b5674b6a220286
 name: Fifa2019
 steps:
@@ -347,12 +349,14 @@ steps:
     config:
       dimension:
         - Country
+      horizontal: false
       measures:
         - count
       sql: |-
         SELECT * FROM PCOLLECTION
         ORDER BY `count` DESC
         LIMIT 10
+      stack: false
       subtype: bar chart
       title: (TOP 10) Total number of players from each country
       xlabel: Country
@@ -362,9 +366,9 @@ steps:
       id: 5d31d26784b5674b6a2202b8
       schema:
         fields:
-          - name: count
+          - name: COUNT
             type: BIGINT
-          - name: Country
+          - name: COUNTRY
             type: VARCHAR
     description: Visualize your data as bar charts
     id: 5d31d26784b5674b6a2202b8
@@ -525,6 +529,34 @@ steps:
     metadataId: org.ananas.destination.file.csv
     name: Top 5 player with X ability
     type: loader
+  5d61c4b7f21cd8730ea65ffa:
+    config:
+      dimension:
+        - Country
+      donut: false
+      is3D: true
+      measures:
+        - count
+      sql: |-
+        SELECT * FROM PCOLLECTION
+        ORDER BY `count` DESC
+        LIMIT 10
+      subtype: pie chart
+      title: Players By Country
+    dataframe:
+      data: []
+      id: 5d61c4b7f21cd8730ea65ffa
+      schema:
+        fields:
+          - name: COUNT
+            type: BIGINT
+          - name: COUNTRY
+            type: VARCHAR
+    description: Visualize your data as pie charts
+    id: 5d61c4b7f21cd8730ea65ffa
+    metadataId: org.ananas.visualization.piechart
+    name: Top 10 country with players - Pie Chart
+    type: viewer
 triggers: []
 variables:
   - name: ability

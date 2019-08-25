@@ -1,0 +1,268 @@
+dag:
+  connections:
+    - source: 5d62a1344b778d21cc452ffd
+      target: 5d62b73a68c1e177cdd2aa65
+    - source: 5d62b73a68c1e177cdd2aa65
+      target: 5d62af5a4b778d21cc452fff
+    - source: 5d62af5a4b778d21cc452fff
+      target: 5d62b82e68c1e177cdd2aa6e
+    - source: 5d62af5a4b778d21cc452fff
+      target: 5d62b92768c1e177cdd2aa73
+    - source: 5d62b82e68c1e177cdd2aa6e
+      target: 5d62ba7568c1e177cdd2aa85
+    - source: 5d62b92768c1e177cdd2aa73
+      target: 5d62ba7568c1e177cdd2aa85
+    - source: 5d62ba7568c1e177cdd2aa85
+      target: 5d62bdc268c1e177cdd2aaaa
+    - source: 5d62bdc268c1e177cdd2aaaa
+      target: 5d62bb1368c1e177cdd2aa92
+id: 5d62a1294b778d21cc452ffb
+name: "[Excel] Monthly Profit Comparison "
+steps:
+  5d62a1344b778d21cc452ffd:
+    config:
+      forceAutoDetectSchema: true
+      format: excel
+      path: ${PROJECT_PATH}/Financial Sample.xlsx
+      subtype: file
+    dataframe:
+      data: []
+      id: 5d62a1344b778d21cc452ffd
+      schema:
+        fields:
+          - name: Segment
+            type: VARCHAR
+          - name: Country
+            type: VARCHAR
+          - name: Product
+            type: VARCHAR
+          - name: Discount Band
+            type: VARCHAR
+          - name: Units Sold
+            type: DOUBLE
+          - name: Manufacturing Price
+            type: DOUBLE
+          - name: Sale Price
+            type: DOUBLE
+          - name: Gross Sales
+            type: DOUBLE
+          - name: Discounts
+            type: DOUBLE
+          - name: " Sales"
+            type: DOUBLE
+          - name: COGS
+            type: DOUBLE
+          - name: Profit
+            type: DOUBLE
+          - name: Date
+            type: TIMESTAMP
+          - name: Month Number
+            type: DOUBLE
+          - name: Month Name
+            type: VARCHAR
+          - name: Year
+            type: VARCHAR
+    description: Read Excel file
+    id: 5d62a1344b778d21cc452ffd
+    metadataId: org.ananas.source.file.excel
+    name: Excel
+    type: connector
+  5d62af5a4b778d21cc452fff:
+    config:
+      sql: |-
+        SELECT
+        	`Year`,
+          `Month`,
+          CAST(SUM(Profit) AS INTEGER) 
+          	AS Profit
+        FROM PCOLLECTION
+        GROUP BY `Year`, `Month`
+      subtype: sql
+    dataframe:
+      data: []
+      id: 5d62af5a4b778d21cc452fff
+      schema:
+        fields:
+          - name: Year
+            type: VARCHAR
+          - name: Month
+            type: INTEGER
+          - name: Profit
+            type: INTEGER
+    description: Transform your data with SQL
+    id: 5d62af5a4b778d21cc452fff
+    metadataId: org.ananas.transform.sql
+    name: Profit by month
+    type: transformer
+  5d62b73a68c1e177cdd2aa65:
+    config:
+      sql: |-
+        SELECT 
+        	Profit,
+          CAST (`Month Number` AS INTEGER) AS `Month`,
+        	`Year`
+        FROM PCOLLECTION
+      subtype: sql
+    dataframe:
+      data: []
+      id: 5d62b73a68c1e177cdd2aa65
+      schema:
+        fields:
+          - name: Profit
+            type: DOUBLE
+          - name: Month
+            type: INTEGER
+          - name: Year
+            type: VARCHAR
+    description: Transform your data with SQL
+    id: 5d62b73a68c1e177cdd2aa65
+    metadataId: org.ananas.transform.sql
+    name: Cast Month Number to Integer
+    type: transformer
+  5d62b82e68c1e177cdd2aa6e:
+    config:
+      sql: |-
+        SELECT 
+        	`Month`,
+          `Profit` AS Profit_2013
+        FROM PCOLLECTION
+        WHERE `Year` = '2013'
+        AND (`Month` = 9 OR 
+        `Month` = 10 OR 
+        `Month` = 11 OR 
+        `Month` = 12)
+      subtype: sql
+    dataframe:
+      data: []
+      id: 5d62b82e68c1e177cdd2aa6e
+      schema:
+        fields:
+          - name: Month
+            type: INTEGER
+          - name: Profit_2013
+            type: INTEGER
+    description: Transform your data with SQL
+    id: 5d62b82e68c1e177cdd2aa6e
+    metadataId: org.ananas.transform.sql
+    name: Q4 Profit 2013 by month
+    type: transformer
+  5d62b92768c1e177cdd2aa73:
+    config:
+      sql: |
+        SELECT 
+        	`Month`,
+          `Profit` AS Profit_2014
+        FROM PCOLLECTION
+        WHERE `Year` = '2014'
+        AND (`Month` = 9 OR 
+        `Month` = 10 OR 
+        `Month` = 11 OR 
+        `Month` = 12)
+      subtype: sql
+    dataframe:
+      data: []
+      id: 5d62b92768c1e177cdd2aa73
+      schema:
+        fields:
+          - name: Month
+            type: INTEGER
+          - name: Profit_2014
+            type: INTEGER
+    description: Transform your data with SQL
+    id: 5d62b92768c1e177cdd2aa73
+    metadataId: org.ananas.transform.sql
+    name: Q4 Profit 2014 by month
+    type: transformer
+  5d62ba7568c1e177cdd2aa85:
+    config:
+      joinedcolumnmap:
+        Month: Month
+      leftcolumns:
+        - Month
+        - Profit_2013
+      leftstepid: 5d62b82e68c1e177cdd2aa6e
+      rightcolumns:
+        - Profit_2014
+      rightstepid: 5d62b92768c1e177cdd2aa73
+      subtype: join
+    dataframe:
+      data: []
+      id: 5d62ba7568c1e177cdd2aa85
+      schema:
+        fields:
+          - name: Month
+            type: INTEGER
+          - name: Profit_2013
+            type: INTEGER
+          - name: Profit_2014
+            type: INTEGER
+    description: Join two data
+    id: 5d62ba7568c1e177cdd2aa85
+    metadataId: org.ananas.transform.join
+    name: JOIN
+    type: transformer
+  5d62bb1368c1e177cdd2aa92:
+    config:
+      dimension:
+        - Month
+      horizontal: false
+      measures:
+        - Profit_2013
+        - Profit_2014
+      sql: |-
+        SELECT 
+        	CAST(`Month` AS INTEGER) 
+          	AS `Month`,
+          Profit_2013,
+          Profit_2014
+        FROM PCOLLECTION
+        ORDER BY `Month` DESC
+        LIMIT 100
+      stack: false
+      subtype: bar chart
+      title: Q4 2013/2014 Monthly Profit
+      xlabel: Month
+      ylabel: Profit
+    dataframe:
+      data: []
+      id: 5d62bb1368c1e177cdd2aa92
+      schema:
+        fields:
+          - name: MONTH
+            type: INTEGER
+          - name: PROFIT_2013
+            type: INTEGER
+          - name: PROFIT_2014
+            type: INTEGER
+    description: Visualize your data as bar charts
+    id: 5d62bb1368c1e177cdd2aa92
+    metadataId: org.ananas.visualization.barchart
+    name: Bar Chart - 2013/2014 Q4 Profit
+    type: viewer
+  5d62bdc268c1e177cdd2aaaa:
+    config:
+      sql: |
+        SELECT 
+        	CAST(`Month` AS VARCHAR) AS `Month`,
+          Profit_2013,
+          Profit_2014
+        FROM PCOLLECTION
+      subtype: sql
+    dataframe:
+      data: []
+      id: 5d62bdc268c1e177cdd2aaaa
+      schema:
+        fields:
+          - name: Month
+            type: VARCHAR
+          - name: Profit_2013
+            type: INTEGER
+          - name: Profit_2014
+            type: INTEGER
+    description: Transform your data with SQL
+    id: 5d62bdc268c1e177cdd2aaaa
+    metadataId: org.ananas.transform.sql
+    name: Cast Month to VARCHAR
+    type: transformer
+triggers: []
+variables: []

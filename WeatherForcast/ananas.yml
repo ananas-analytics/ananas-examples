@@ -1,0 +1,280 @@
+dag:
+  connections:
+    - source: 5d43fba34d5bd13eb0eb3b1d
+      target: 5d43fc284d5bd13eb0eb3b20
+    - source: 5d43fbf74d5bd13eb0eb3b1e
+      target: 5d43fc9e4d5bd13eb0eb3b24
+    - source: 5d43fc284d5bd13eb0eb3b20
+      target: 5d43fcc14d5bd13eb0eb3b27
+    - source: 5d43fc9e4d5bd13eb0eb3b24
+      target: 5d43fcc14d5bd13eb0eb3b27
+    - source: 5d43fcc14d5bd13eb0eb3b27
+      target: 5d43fd654d5bd13eb0eb3b2b
+id: 5d4348644d5bd13eb0eb3b09
+name: Temperature Forcast
+steps:
+  5d43fba34d5bd13eb0eb3b1d:
+    config:
+      body: ""
+      forceAutoDetectSchema: true
+      format: json
+      jsonpath: $.list
+      lineDelimiter: \n
+      method: get
+      subtype: api
+      url: https://api.openweathermap.org/data/2.5/forecast?q=${city1},${country_code}&appid=${api_key}
+    dataframe:
+      data: []
+      id: 5d43fba34d5bd13eb0eb3b1d
+      schema:
+        fields:
+          - name: clouds.all
+            type: DECIMAL
+          - name: main.humidity
+            type: DECIMAL
+          - name: wind.deg
+            type: DECIMAL
+          - name: main.sea_level
+            type: DECIMAL
+          - name: rain.3h
+            type: DECIMAL
+          - name: main.temp_min
+            type: DECIMAL
+          - name: wind.speed
+            type: DECIMAL
+          - name: main.grnd_level
+            type: DECIMAL
+          - name: dt
+            type: DECIMAL
+          - name: main.pressure
+            type: DECIMAL
+          - name: dt_txt
+            type: VARCHAR
+          - name: sys.pod
+            type: VARCHAR
+          - name: main.temp_max
+            type: DECIMAL
+          - fields:
+              - name: id
+                type: DECIMAL
+              - name: main
+                type: VARCHAR
+              - name: description
+                type: VARCHAR
+              - name: icon
+                type: VARCHAR
+            mode: REPEATED
+            name: weather
+            type: RECORD
+          - name: main.temp_kf
+            type: DECIMAL
+          - name: main.temp
+            type: DECIMAL
+    description: >
+      Connect data with openweather API
+
+
+      This example can be executed on Ananas Desktop 0.9.0+
+
+
+      See [OpenWeather Web API](https://openweathermap.org/api) for more details. 
+
+
+      To run the example, you need to first create an OpenWeather API key for free.
+    id: 5d43fba34d5bd13eb0eb3b1d
+    metadataId: org.ananas.source.api
+    name: City1 Weather
+    type: connector
+  5d43fbf74d5bd13eb0eb3b1e:
+    config:
+      body: ""
+      forceAutoDetectSchema: true
+      format: json
+      jsonpath: $.list
+      lineDelimiter: \n
+      method: get
+      subtype: api
+      url: https://api.openweathermap.org/data/2.5/forecast?q=${city2},${country_code}&appid=${api_key}
+    dataframe:
+      data: []
+      id: 5d43fbf74d5bd13eb0eb3b1e
+      schema:
+        fields:
+          - name: clouds.all
+            type: DECIMAL
+          - name: main.humidity
+            type: DECIMAL
+          - name: wind.deg
+            type: DECIMAL
+          - name: main.sea_level
+            type: DECIMAL
+          - name: rain.3h
+            type: DECIMAL
+          - name: main.temp_min
+            type: DECIMAL
+          - name: wind.speed
+            type: DECIMAL
+          - name: main.grnd_level
+            type: DECIMAL
+          - name: dt
+            type: DECIMAL
+          - name: main.pressure
+            type: DECIMAL
+          - name: dt_txt
+            type: VARCHAR
+          - name: sys.pod
+            type: VARCHAR
+          - name: main.temp_max
+            type: DECIMAL
+          - fields:
+              - name: id
+                type: DECIMAL
+              - name: main
+                type: VARCHAR
+              - name: description
+                type: VARCHAR
+              - name: icon
+                type: VARCHAR
+            mode: REPEATED
+            name: weather
+            type: RECORD
+          - name: main.temp_kf
+            type: DECIMAL
+          - name: main.temp
+            type: DECIMAL
+    description: >
+      Connect data with openweather API
+
+
+      This example can be executed on Ananas Desktop 0.9.0+
+
+
+      See [OpenWeather Web API](https://openweathermap.org/api) for more details. 
+
+
+      To run the example, you need to first create an OpenWeather API key for free.
+    id: 5d43fbf74d5bd13eb0eb3b1e
+    metadataId: org.ananas.source.api
+    name: City2 Weather
+    type: connector
+  5d43fc284d5bd13eb0eb3b20:
+    config:
+      sql: |-
+        SELECT
+        	dt_txt as `date`,
+          `main.temp_max` as `city1_temp`
+        FROM PCOLLECTION
+      subtype: sql
+    dataframe:
+      data: []
+      id: 5d43fc284d5bd13eb0eb3b20
+      schema:
+        fields:
+          - name: date
+            type: VARCHAR
+          - name: city1_temp
+            type: DECIMAL
+    description: Transform your data with SQL
+    id: 5d43fc284d5bd13eb0eb3b20
+    metadataId: org.ananas.transform.sql
+    name: Get city1 max temperature
+    type: transformer
+  5d43fc9e4d5bd13eb0eb3b24:
+    config:
+      sql: |-
+        SELECT
+        	dt_txt as `date`,
+          `main.temp_max` as `city2_temp`
+        FROM PCOLLECTION
+      subtype: sql
+    dataframe:
+      data: []
+      id: 5d43fc9e4d5bd13eb0eb3b24
+      schema:
+        fields:
+          - name: date
+            type: VARCHAR
+          - name: city2_temp
+            type: DECIMAL
+    description: Transform your data with SQL
+    id: 5d43fc9e4d5bd13eb0eb3b24
+    metadataId: org.ananas.transform.sql
+    name: Get city2 max temperature
+    type: transformer
+  5d43fcc14d5bd13eb0eb3b27:
+    config:
+      joinedcolumnmap:
+        date: date
+      leftcolumns:
+        - date
+        - city1_temp
+      leftstepid: 5d43fc284d5bd13eb0eb3b20
+      rightcolumns:
+        - city2_temp
+      rightstepid: 5d43fc9e4d5bd13eb0eb3b24
+      subtype: join
+    dataframe:
+      data: []
+      id: 5d43fcc14d5bd13eb0eb3b27
+      schema:
+        fields:
+          - name: date
+            type: VARCHAR
+          - name: city1_temp
+            type: DECIMAL
+          - name: city2_temp
+            type: DECIMAL
+    description: Join two data
+    id: 5d43fcc14d5bd13eb0eb3b27
+    metadataId: org.ananas.transform.join
+    name: JOIN
+    type: transformer
+  5d43fd654d5bd13eb0eb3b2b:
+    config:
+      dimension:
+        - date
+      measures:
+        - city1_temp
+        - city2_temp
+      sql: |-
+        SELECT * FROM PCOLLECTION
+        ORDER BY `date` ASC
+        LIMIT 100
+      subtype: line chart
+      title: Max temperature in next 5 days
+      xlabel: Time
+      ylabel: Temperature (F)
+    dataframe:
+      data: []
+      id: 5d43fd654d5bd13eb0eb3b2b
+      schema:
+        fields:
+          - name: DATE
+            type: VARCHAR
+          - name: CITY1_TEMP
+            type: DECIMAL
+          - name: CITY2_TEMP
+            type: DECIMAL
+    description: Visualize your data as line charts
+    id: 5d43fd654d5bd13eb0eb3b2b
+    metadataId: org.ananas.visualization.linechart
+    name: Line Chart
+    type: viewer
+triggers: []
+variables:
+  - name: city2
+    description: ""
+    scope: project
+    type: string
+  - name: city1
+    description: ""
+    scope: project
+    type: string
+  - name: api_key
+    description: ""
+    scope: project
+    type: credential
+  - name: country_code
+    description: ""
+    scope: project
+    type: string
