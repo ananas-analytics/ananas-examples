@@ -30,9 +30,6 @@ steps:
         fields:
           - name: clouds.all
             type: DECIMAL
-          - fields: []
-            name: rain
-            type: RECORD
           - name: main.humidity
             type: DECIMAL
           - name: wind.deg
@@ -276,7 +273,7 @@ variables:
   - name: api_key
     description: ""
     scope: project
-    type: string
+    type: credential
   - name: country_code
     description: ""
     scope: project
