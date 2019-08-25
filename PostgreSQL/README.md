@@ -1,5 +1,7 @@
 PostgreSQL Example Project
 
+> This example works on Ananas Desktop 0.8.0+
+
 ## Setup
 
 ### Manual setup
