@@ -1,9 +1,10 @@
 # Extension
 
-> For now this example only works in command line mode.
+> For now this example only works in command line mode with minimal Ananas version 0.10.0
+
 > Extension feature is current in beta.
 
-This example demonstrates how to use ananas extension in an Ananas project. Currently it does not works from Ananas Deskopt. You need to use Ananas CLI to try it.
+This example demonstrates how to use ananas extension in an Ananas project. Currently it does not work from Ananas Desktop. You need to use Ananas CLI to try it.
 
 All commands in this doc are executed from current example directory.
 
