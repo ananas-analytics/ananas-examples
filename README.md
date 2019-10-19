@@ -28,11 +28,16 @@ Customer analysis from MySQL database.
 
 ### PostgreSQL
 
-Customer analysis from PostgreSQL database
+Customer analysis from PostgreSQL database.
 
 ### Excel
 
 Compares 2013 & 2014 Q4 monthly profit from an excel file.
 
+### Extension (beta)
+
+An example to show how to use Extension in Ananas. 
+
+> The extension feature is still in beta, and it only works in headless mode. 
 
 > More examples coming soon ...

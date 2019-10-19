@@ -1,0 +1,58 @@
+dag:
+  connections:
+    - source: web_api_source
+      target: sql_transform
+    - source: sql_transform
+      target: number_view
+id: unique_project_id_in_workspace
+name: bitcoin
+steps:
+  web_api_source:
+    config:
+      body: ""
+      forceAutoDetectSchema: true
+      format: json
+      headers: {}
+      jsonpath: $
+      lineDelimiter: \n
+      method: get
+      subtype: api
+      url: https://api.coindesk.com/v1/bpi/currentprice.json
+    description: Connect data from an API
+    id: web_api_source
+    metadataId: org.ananas.source.api
+    name: BPI real-time data
+    type: connector
+  sql_transform:
+    config:
+      sql: |-
+        SELECT
+        	`bpi.EUR.code` as `code`,
+          `bpi.EUR.rate_float` as `rate`,
+          `time.updatedISO` as `time`
+        FROM PCOLLECTION
+    description: Transform your data with SQL
+    id: sql_transform
+    metadataId: org.ananas.extension.example.transform.sql
+    name: SQL
+    type: transformer
+  number_view:
+    config:
+      color: "#417505"
+      fields:
+        - rate
+      size: 52px
+      sql: SELECT * FROM PCOLLECTION
+      subtype: big number
+      title: Euro Rate
+    description: Visualize a single number
+    id: number_view
+    metadataId: org.ananas.visualization.bignumber
+    name: Big Number
+    type: viewer
+variables:
+  - name: EXAMPLE_VAR
+    description: ""
+    scope: project
+    type: string
+
